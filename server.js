@@ -45,19 +45,37 @@ app.post('/api/notes', (req, res) => {
       res.json(newNote);
     }
   });
-// API route to delete a note by title
-app.delete('/api/notes/:title', (req, res) => {
-    
-});
-// Route notes.html file
+//  delete a note by title
+  app.delete('/api/notes/:title', (req, res) => {
+    // Read notes from db.json
+    const notes = JSON.parse(fs.readFileSync('db.json', 'utf8'));
+  
+    // Find index of note with matching title
+    const noteIndex = notes.findIndex(note => note.title === req.params.title);
+  
+    if (noteIndex !== -1) {
+      // Remove note from notes array
+      notes.splice(noteIndex, 1);
+  
+      // Write updated notes array to db.json
+      fs.writeFileSync('db.json', JSON.stringify(notes));
+  
+      res.json({ success: true });
+    } else {
+      res.status(404).json({ error: 'Note not found' });
+    }
+  });
+// Route to serve the notes.html file
 app.get('/notes', (req, res) => {
     res.sendFile(__dirname + '/public/notes.html');
-});
-// Route to serve the index.html file a all other routes
-app.get('*', (req, res) => {
+  });
+  
+  // Route to serve the index.html file for all other routes
+  app.get('*', (req, res) => {
     res.sendFile(__dirname + '/public/index.html');
-});
-// Start the server
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+  });
+  
+  // Start the server
+  app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+  });
