@@ -4,13 +4,20 @@ const fs = require('fs');
 // base init
 const app = express();
 const PORT = process.env.PORT || 3000;
-//for parsing request body
+
+// parsing request body
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-// Serve static resources
-app.use(express.static('public'));  // serve static resources
-// Routes
 
+// Serve static files (e.g., HTML, CSS, JavaScript)
+app.use(express.static('public'));
+
+// API route to get all notes
+app.get('/api/notes', (req, res) => {
+  // Read notes from db.json
+  const notes = JSON.parse(fs.readFileSync('db.json', 'utf8'));
+  res.json(notes);
+});
 // API route for New entry, check for title if it is unique, if not unique, send error message
 // API route to create a new note
 app.post('/api/notes', (req, res) => {
