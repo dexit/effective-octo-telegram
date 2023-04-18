@@ -1,6 +1,8 @@
 # Note Taking API
   [![License: GPL](https://img.shields.io/badge/License-GPL-green.svg)](https://opensource.org/licenses/GPL)
+The repository link is : https://github.com/dexit/effective-octo-telegram
 
+[ToDO] Heroku live link is : https://effective-octo-telegram.herokuapp.com 
 ## Description
 Simple Express.js application that serves as an API for managing notes with routes for getting all notes, creating new notes, and deleting notes by title, and also serves static files for the client to interact with the API.
 
