@@ -14,14 +14,14 @@ app.use(express.static('public'));
 // API route to get all notes
 app.get('/api/notes', (req, res) => {
   // Read notes from db.json
-  const notes = JSON.parse(fs.readFileSync('db.json', 'utf8'));
+  const notes = JSON.parse(fs.readFileSync('../db/db.json', 'utf8'));
   res.json(notes);
 });
 
 // API route to create a new note
 app.post('/api/notes', (req, res) => {
   // Read notes from db.json
-  const notes = JSON.parse(fs.readFileSync('db.json', 'utf8'));
+  const notes = JSON.parse(fs.readFileSync('../db/db.json', 'utf8'));
   
   // Get note data from request body
   const newNote = {
@@ -39,7 +39,7 @@ app.post('/api/notes', (req, res) => {
     notes.push(newNote);
   
     // Write updated notes array to db.json
-    fs.writeFileSync('db.json', JSON.stringify(notes));
+    fs.writeFileSync('../db/db.json', JSON.stringify(notes));
   
     res.json(newNote);
   }
@@ -48,7 +48,7 @@ app.post('/api/notes', (req, res) => {
 // API route to delete a note by title
 app.delete('/api/notes/:title', (req, res) => {
   // Read notes from db.json
-  const notes = JSON.parse(fs.readFileSync('db.json', 'utf8'));
+  const notes = JSON.parse(fs.readFileSync('../db/db.json', 'utf8'));
 
   // Find index of note with matching title
   const noteIndex = notes.findIndex(note => note.title === req.params.title);
@@ -58,7 +58,7 @@ app.delete('/api/notes/:title', (req, res) => {
     notes.splice(noteIndex, 1);
 
     // Write updated notes array to db.json
-    fs.writeFileSync('db.json', JSON.stringify(notes));
+    fs.writeFileSync('../db/db.json', JSON.stringify(notes));
 
     res.json({ success: true });
   } else {
